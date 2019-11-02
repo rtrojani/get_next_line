@@ -14,19 +14,31 @@
 
 int		get_next_line(int fd, char **line)
 {
-	static char		*entry = NULL;
-	char			buff[BUFFER_SIZE];
-	char			*buff_in;
-	char			*buff_out;
-	int				ret;
-	int				i;
+	t_list				*alst;
+	static t_list		*current_link = NULL;
+	int					ret;
+	char				buff[BUFFER_SIZE];
+	unsigned int		i;
 
-	ret = 0;
-	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
+	if (!current_link)
 	{
-		i = 0;
-		while (i )
+		alst = ft_lstnew(fd);
+		current_link = alst;
 	}
-
-	
+	if (!current_link->str)
+	{
+		while ((ret = read(fd, buff, BUFFER_SIZE)))
+		{
+			i = 0;
+			while (i < BUFFER_SIZE)
+			{
+				if (buff[i] == '\n')
+				{
+					current_link->str = ft_strndup(buff, i);
+					current_link->next->str = ft_strjoin_free();
+				}
+			i++;
+			}
+		}
+	}
 }

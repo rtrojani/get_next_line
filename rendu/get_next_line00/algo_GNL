@@ -1,0 +1,57 @@
+read_buffer
+|	[ if not buff ]
+|	|	fill in buff (read);
+|	[ while buff ]
+|	|	look for \n in buff
+|	|	[ if \n in buff ]
+|	|	|	add the the beginning of buff to list->str
+|	|	|	[ if not list->next ]
+|	|	|	|	create list->next
+|	|	|	move the rest of buff to list->next->str
+|	|	[ else ]
+|	|	|	read_buffer
+
+get_next_line
+|	[ if not list ]
+|	|	create list
+|	[ if list->str ]
+|	|	look for \n in list->str
+|	|	[ if \n in list->str ]
+|	|	|	[ if not list->next ]
+|	|	|	|	create list->next
+|	|	|	move the rest of lisr->str to list->next->str
+|	|	[ else ]
+|	|	|	[ if not buff ]
+|	|	|	|	fill in buff (read);
+|	|	|	[ while buff ]
+|	|	|	|	look for \n in buff
+|	|	|	|	[ if \n in buff ]
+|	|	|	|	|	add the the beginning of buff to list->str
+|	|	|	|	|	[ if not list->next ]
+|	|	|	|	|	|	create list->next
+|	|	|	|	|	move the rest of buff to list->next->str
+|	|	|	|	[ else ]
+|	|	|	|	|	add buff to list->str
+|	|	|	|	|	fill in buff (read)
+|	|	[ if not list->next ]
+|	|	|	create list->next
+|	|	set line = list->str
+|	|	list = list->next
+|	[ else ]
+|	|	[ if not buff ]
+|	|	|	fill in buff (read)
+|	|	[ while buff ]
+|	|	|	look for \n in buff
+|	|	|	[ if \n in buff ]
+|	|	|	|	add the beginning of buff in list->str
+|	|	|	|	[ if not list->next ]
+|	|	|	|	|	create list->next
+|	|	|	|	move the rest of buff to list->next->str
+|	|	|	[ else ]
+|	|	|	|	add buff to list->str
+|	|	|	|	fill in buff (read)
+|	|	[ if not list->next ]
+|	|	|	create list->next
+|	|	set line = list->str
+|	|	list = list->next
+

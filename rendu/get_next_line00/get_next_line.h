@@ -22,4 +22,11 @@
 
 int		get_next_line(int fd, char **line);
 
+typedef struct		s_list
+{
+	int					fd;
+	char				*str;
+	struct s_list		*next;
+}					t_list;
+
 #endif
