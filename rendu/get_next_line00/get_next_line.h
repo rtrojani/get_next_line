@@ -6,7 +6,7 @@
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 12:16:44 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/01 17:13:22 by rotrojan         ###   ########.fr       */
+/*   Updated: 2019/11/04 20:35:50 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
+#  define BUFFER_SIZE 100
 # endif
 
-int		get_next_line(int fd, char **line);
-
-typedef struct		s_list
-{
-	int					fd;
-	char				*str;
-	struct s_list		*next;
-}					t_list;
+int			get_next_line(int fd, char **line);
+char		*ft_strdup(char const *s1);
+char		*ft_strjoin(char const *s1, char const *s2);
+size_t		ft_strlen(char const *s);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+void		*ft_bzero(void *b, size_t len);
 
 #endif
