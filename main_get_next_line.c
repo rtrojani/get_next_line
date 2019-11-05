@@ -6,7 +6,7 @@
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 12:39:17 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/04 19:37:25 by rotrojan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:33:24 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,21 @@ int		main(int ac, char **av)
 	str = NULL;
 	if ((fd = open(av[1], O_RDONLY)) != -1)
 	{
-		printf("open ok\n");
 		while ((ret = get_next_line(fd, &str)) != 0)
 		{
 			if (ret == -1)
 			{
-				printf("Error\n");
+				printf("GNL error\n");
+				close(fd);
 				return (0);
 			}
-//			printf("ret = %d\n", ret);
 			printf("%s\n", str);
 			free(str);
+			str = NULL;
 		}
-//		printf("ret = %d\n", ret);
 		close(fd);
 	}
+	while (1)
+	system("leaks a.out");
 	return (0);
 }

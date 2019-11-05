@@ -6,7 +6,7 @@
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 12:16:44 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/04 20:35:50 by rotrojan         ###   ########.fr       */
+/*   Updated: 2019/11/05 13:09:45 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ char		*ft_strdup(char const *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlen(char const *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-void		*ft_bzero(void *b, size_t len);
 
 #endif
