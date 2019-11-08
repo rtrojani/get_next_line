@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 16:02:45 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/06 16:02:54 by rotrojan         ###   ########.fr       */
+/*   Created: 2019/11/08 17:23:17 by rotrojan          #+#    #+#             */
+/*   Updated: 2019/11/08 17:23:22 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t		ft_strlen(char const *s)
 {
@@ -20,6 +20,19 @@ size_t		ft_strlen(char const *s)
 	while (*(s + size))
 		size++;
 	return (size);
+}
+
+char		*ft_strchr(char const *s, int c)
+{
+	while (*s)
+	{
+		if (*s == c)
+			return ((char*)s);
+		s++;
+	}
+	if (!c)
+		return ((char*)s);
+	return (NULL);
 }
 
 char		*ft_strdup(char const *s1)
@@ -73,8 +86,14 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	char			*str;
 	char			*tmp;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+	{
+		if (!s2)
+			return (NULL);
+		return (ft_strdup(s2));
+	}
+	if (!s2)
+		return (ft_strdup(s1));
 	if (!(str = (char*)malloc((sizeof(*tmp)
 		* (ft_strlen(s1) + ft_strlen(s2) + 1)))))
 		return (NULL);
@@ -85,16 +104,4 @@ char		*ft_strjoin(char const *s1, char const *s2)
 		*tmp++ = *s2++;
 	*tmp = '\0';
 	return (str);
-}
-
-t_list		*ft_lstnew(int fd)
-{
-	t_list		*elem;
-
-	if (!(elem = (t_list*)malloc(sizeof(*elem))))
-		return (NULL);
-	elem->fd = fd;
-	elem->s_buff = ft_strdup("");
-	elem->next = NULL;
-	return (elem);
 }

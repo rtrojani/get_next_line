@@ -6,7 +6,7 @@
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 16:00:15 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/06 16:05:25 by rotrojan         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:25:42 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct		s_list
 	struct s_list		*next;
 }					t_list;
 
-int					get_next_line(int fd, char **line);
-char				*ft_strdup(char const *s1);
-char				*ft_strjoin(char const *s1, char const *s2);
-size_t				ft_strlen(char const *s);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
-t_list				*ft_lstnew(int fd);
+int			get_next_line(int fd, char **line);
+char		*ft_strdup(char const *s1);
+char		*ft_strjoin(char const *s1, char const *s2);
+size_t		ft_strlen(char const *s);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strchr(char const *s, int c);
 
 #endif

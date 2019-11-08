@@ -5,86 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/05 13:19:38 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/06 18:12:54 by rotrojan         ###   ########.fr       */
+/*   Created: 2019/11/08 12:23:24 by rotrojan          #+#    #+#             */
+/*   Updated: 2019/11/08 18:33:07 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_line_from_s_buff(char **s_buff, char **line, size_t *i)
+static int		append_line(char **s_buff, char **line, int fd, ssize_t ret)
 {
 	char	*tmp;
 
-	while ((*s_buff)[(*i)] && (*s_buff)[(*i)] != '\n')
-		(*i)++;
-	if ((*s_buff)[*i] == '\n')
+	tmp = *s_buff;
+	while (*tmp && *tmp != '\n')
+		tmp++;
+	if (*tmp == '\n')
 	{
-		*line = ft_substr(*s_buff, 0, *i);
-		tmp = ft_strdup((*s_buff) + *i + 1);
-		free(*s_buff);
-		*s_buff = tmp;
-		return (1);
-	}
-	else
-		return (-1);
-}
-
-int		fill_s_buff(int fd, char **s_buff)
-{
-	char	r_buff[BUFFER_SIZE + 1];
-	char	*tmp;
-	int		ret;
-	int		len;
-
-	len = BUFFER_SIZE + 1;
-	tmp = r_buff;
-	while (len--)
-		*tmp++ = '\0';
-	if ((ret = read(fd, r_buff, BUFFER_SIZE)) > 0)
-	{
-		tmp = ft_strjoin(*s_buff, r_buff);
-		free(*s_buff);
-		*s_buff = tmp;
-		return (1);
-	}
-	else 
-	{
-		tmp = ft_strdup(*s_buff);
+		if (!(*line = ft_substr(*s_buff, 0, (size_t)(tmp - *s_buff))))
+			return (-1);
+		if (!(tmp = ft_strdup(++tmp)))
+			return (-1);
 		free(*s_buff);
 		*s_buff = tmp;
 	}
-	return (ret);
-}
-
-#include <stdio.h>
-int		get_next_line(int fd, char **line)
-{
-	static char		*s_buff = NULL;
-	size_t			i;
-	int				ret;
-
-	if (!s_buff)
-		s_buff = ft_strdup("");
-	i = 0;
-	while ((ret = fill_s_buff(fd, &s_buff)) > 0)
-		if ((get_line_from_s_buff(&s_buff + i, line, &i)))
-			return (1);
-	while (s_buff[i])
+	else if (!*tmp)
 	{
-		if ((get_line_from_s_buff(&s_buff, line, &i)))
-		{
-			i++;
-			return (1);
-		}
-	}
-	if (s_buff[i] == '\0')
-	{
-		*line = ft_strdup(s_buff);
-		free(s_buff);
-		s_buff = NULL;
+		if (ret == BUFFER_SIZE)
+			get_next_line(fd, line);
+		if (!(*line = ft_strdup(*s_buff)))
+			return (-1);
+		free(*s_buff);
+		*s_buff = NULL;
 		return (0);
 	}
-	free(s_buff);
-	return (ret);
+	return (1);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static char		*s_buff = NULL;
+	char			r_buff[BUFFER_SIZE + 1];
+	char			*tmp;
+	ssize_t			ret;
+
+	if (fd < 0 || !line || BUFFER_SIZE < 1)
+		return (-1);
+	while ((ret = read(fd, r_buff, BUFFER_SIZE)) > 0)
+	{
+		r_buff[ret] = '\0';
+		tmp = ft_strjoin(s_buff, r_buff);
+		free(s_buff);
+		s_buff = tmp;
+		if (ft_strchr(s_buff, '\n'))
+			break ;
+	}
+	if (ret < 0)
+		return (-1);
+	if (!ret && (!s_buff || !*s_buff))
+	{
+		*line = ft_strdup("");
+		return (0);
+	}
+	return (append_line(&s_buff, line, fd, ret));
 }

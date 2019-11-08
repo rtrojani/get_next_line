@@ -6,7 +6,7 @@
 /*   By: rotrojan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 20:30:23 by rotrojan          #+#    #+#             */
-/*   Updated: 2019/11/06 16:02:38 by rotrojan         ###   ########.fr       */
+/*   Updated: 2019/11/08 18:44:37 by rotrojan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ size_t		ft_strlen(char const *s)
 	while (*(s + size))
 		size++;
 	return (size);
+}
+
+char		*ft_strchr(char const *s, int c)
+{
+	while (*s)
+	{
+		if (*s == c)
+			return ((char*)s);
+		s++;
+	}
+	if (!c)
+		return ((char*)s);
+	return (NULL);
 }
 
 char		*ft_strdup(char const *s1)
@@ -73,8 +86,14 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	char			*str;
 	char			*tmp;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+	{
+		if (!s2)
+			return (NULL);
+		return (ft_strdup(s2));
+	}
+	if (!s2)
+		return (ft_strdup(s1));
 	if (!(str = (char*)malloc((sizeof(*tmp)
 		* (ft_strlen(s1) + ft_strlen(s2) + 1)))))
 		return (NULL);
